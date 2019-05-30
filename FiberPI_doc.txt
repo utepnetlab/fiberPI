@@ -1,0 +1,133 @@
+Help on module FiberPI:
+
+NAME
+    FiberPI
+
+DESCRIPTION
+    Author: Christopher Mendoza
+    A framework to analyze fiber optic connections.
+    Version 2.0
+
+CLASSES
+    builtins.object
+        connection
+        node
+    
+    class connection(builtins.object)
+     |  Class for connection between two nodes
+     |  
+     |  Methods defined here:
+     |  
+     |  Connect(self)
+     |      Connect to both nodes involved in this connection
+     |  
+     |  DetectContamination(self)
+     |      Uses getCS function to detect contamination.
+     |  
+     |  Disconnect(self)
+     |      Closes Connections
+     |  
+     |  __enter__(self)
+     |  
+     |  __exit__(self, exc_type, exc_value, exc_traceback)
+     |  
+     |  __init__(self, name, node1, node2, port1, port2, delta, p1acc, p2acc)
+     |      Sets up connection
+     |      
+     |      name: name of connection
+     |      node1: instance of node class
+     |      node2: instance of node class
+     |      port1: the port of interest on node1
+     |      port2: the port of interest on node2
+     |      delta: the amount of power loss due to non-contaminant factors
+     |      p1acc: the accuracy of the SFP in port1
+     |      p2acc: the accuracy of the SFP in port2
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+    
+    class node(builtins.object)
+     |  A class for a switch or other SFP enabled device.
+     |  
+     |  Methods defined here:
+     |  
+     |  Connect(self)
+     |      Connects to node
+     |  
+     |  Disconnect(self)
+     |      Disconnects from node
+     |  
+     |  __init__(self, name, ip, model, usr, pas)
+     |      Sets up switch model, ip address and gives it a name.
+     |      
+     |      name: name of node
+     |      ip: ip address of node
+     |      model: model of node, must be same as in device_driver
+     |      usr: username for CLI
+     |      pas: password for CLI
+     |  
+     |  sendCommand(self, s)
+     |      Sends command to node.
+     |      
+     |      s: command to send
+     |      
+     |      returns: CLI output
+     |  
+     |  sendCommandTiming(self, s, res)
+     |      Send command with timing, this is necessary for certain commands.
+     |      
+     |      s: command to send
+     |      res: response to s command
+     |      
+     |      returns: CLI output
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FUNCTIONS
+    dBmtomw(value)
+        Converts dBm to mw
+        
+        value: dBm value
+        
+        returns: mW value
+    
+    device_driver(model)
+        Returns the information needed to parse switch CLI output
+        
+        model: The model name string
+        
+        returns: Dictionary with the CLI command the units and output format
+    
+    getCS(Tx, Rx, delta, TxAcc, RxAcc)
+        Provides contamination analysis between two SFPs connected by a fiber optic cable.
+        
+        Tx: the Tx power in mW
+        Rx: the Rx power in mW
+        delta: The amount of expected power loss due to non-contaminant factors
+        TxAcc: The accuracy of the tx SFP
+        RxAcc: The accuracy of the rx SFP
+        
+        returns: Dictionary with the power lost, contamination score, contamination threshold and if the analysis declares the connection as contaminated.
+    
+    strtofloat(string, units)
+        Converts the string from the CLI output to a float value.
+        
+        string: The CLI output string
+        units: mW or dBm
+        
+        returns: Float value
+
+
