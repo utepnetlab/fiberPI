@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="FiberPI",
-    version="0.0.1",
+    version="0.0.3",
     author="Christopher Mendoza",
     author_email="camendoza7@miners.utep.edu",
     description="Package to detect contaminated fiber connectors",
