@@ -155,7 +155,7 @@ class connection:
     """
     Class for connection between two nodes
     """
-    def __init__(self,name,node1,node2,port1,port2,delta,p1acc,p2acc):
+    def __init__(self, name, node1, node2, port1, port2, delta = 0, p1acc = 1, p2acc = 1):
         """
         Sets up connection
 
@@ -183,7 +183,14 @@ class connection:
         
     def __exit__(self, exc_type, exc_value, exc_traceback):
         self.Disconnect()
-
+        
+    def calculateAttenuation(self, length, mode, wavelength):
+        MMW = {'850': 3.5, '1300': 1.5}
+        SMW = {'1310': 0.4, '1550': 0.3}
+        M = {'SM':SMW, 'MM': MMW}
+        att = M[mode][wavelength] * (length/1000) + 0.75
+        self.delta = att
+        return att
 
     def Connect(self):  
         """
